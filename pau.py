@@ -9,11 +9,12 @@ logueado = True
 
 # Esta es la parte de Snow:
 def login(matricula):
-
+    logueado = False
 
 # Esta es la parte de Bidó
-def codewars(codewars = "codewars.csv", ejercicios = "ejercicios.csv", procesado = "processed.csv"):
+def codewars(code_wars = "codewars.csv", ejercicios = "ejercicios.csv", procesado = "processed.csv"):
     if logueado:
+        print(code_wars)
         # Escribir codigo aqui
         # Aqui va codigo de Numero 1
     else:
@@ -22,6 +23,7 @@ def codewars(codewars = "codewars.csv", ejercicios = "ejercicios.csv", procesado
 # Esta es la parte de Federico:
 def summary():
     if logueado:
+        print(logueado)
         # Escribir codigo aqui
         # Aqui va codigo de Numero 1
     else:
@@ -37,7 +39,7 @@ Bienvenido.
 ''')
 
     # Primero recibimos un comando: 
-    comando = input().lower
+    comando = input().lower()
 
     # Luego vemos que dice el comando y corremos el codigo:
     # Escribir todos los comandos. (Hacer)
