@@ -1,4 +1,4 @@
-# Cada uno tiene sus partes pero,
+﻿# Cada uno tiene sus partes pero,
 # si crees que puedes ayudar a uno de tus compañeros
 # no dudes en hacerlo.
 
@@ -32,7 +32,7 @@ def codewars(code_wars = "codewars.csv", ejercicios = "ejercicios.csv", procesad
         # 3- Llenar el diccionario con la informacion sacada del archivo de Codewars.
             # el diccionario es: {"nombre_del_ejercicio": "fecha_completado"} (ambos son 'strings')
         for item in archivo_codewars:
-            hechos.[item[1]] = item[4]
+            hechos.[item[2]] = item[4]
 
         # Hay que importar datetime para trabajar con las fechas en el paso 4.
         from datetime import datetime
@@ -41,20 +41,20 @@ def codewars(code_wars = "codewars.csv", ejercicios = "ejercicios.csv", procesad
             # Tenemos que llenar 'ejercicios' con la informacion que se escribira al CSV procesado.
         for item in archivo_ejercicios:
             # Comprueba si el ejercicio fue realizado.
-            if item[2] in hechos.keys():
+            if item[3] in hechos.keys():
                 # Hay que convertir los strings a fechas.
-                date_completed = datetime.strptime(hechos[item[2]], "%Y-%m-%dT%H:%M:%SZ")
+                date_completed = datetime.strptime(hechos[item[3]], "%Y-%m-%dT%H:%M:%SZ")
                 due_date = datetime.strptime(item[1], "%Y,%m,%d")
 
                 check = date_completed > due_date
                 # Aqui revisamos si la fecha en la que se completo fue despues de la de entrega.
                     # (devuelve un booleano)
 
-                ejercicios.append([item[0], item[2], True, hechos[item[2]], check])
+                ejercicios.append([item[0], item[3], True, hechos[item[3]], check])
                 # Aqui le agregamos una lista a la lista 'ejercicios'. Con el formato adecuado (See below).
 
             else:
-                ejercicios.append([item[0], item[2], False, None, False])
+                ejercicios.append([item[0], item[3], False, None, False])
                 # Aqui le agregamos una lista a la lista 'ejercicios'. Con el formato adecuado (See below).
 
         # Este es el formato de las listas en 'ejercicios':
