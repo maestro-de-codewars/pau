@@ -81,35 +81,25 @@ def codewars(code_wars = "codewars.csv", ejercicios = "ejercicios.csv", procesad
         print("Tienes que loguearte primero.")
 
 # Esta es la parte de Federico:
-def summary():
-    if logueado:
-        # Aqui va codigo de Numero 1
+def summary(list_):
+    #nota: la lista debe estar en el formato pedido por el profe que es: 
+# list= [Batch (string), Exercise (string),  Completed (bool), DateCompleted(String or None), CompletedLate (bool)]
+#cualquier duda ver la lista de prueba adjuntada abajo 
+    Total_Completed = 0   # se declara la variable
+    Total_Late = 0      #se declara la variable
+    Total_Excercises = len(list_)    # esta variable sera igual a la cantidad de listas que tenga la lista ya que por cada lista habra un ejercicio
+    for exercise in list_:           #vamos a recorrer cada lista para sacar la data 
+        if exercise[2] == True:     #verificamos si el ejercicio fue hecho
+            Total_Completed +=1
+            if exercise[4] == True:     #verificamos si se entrego tarde
+                Total_Late +=1     
+    Total_Missing = len(list_) - Total_Completed   # los ejercicio no entregados son igual al total de ejercicios menos los realizados 
+    return 'report: \nStudentId:%i \nTotalExcercises:%i \nTotalCompleted:%i \nTotalLate:%i \nTotalMissing:%i' %(20157443,Total_Excercises,Total_Completed,Total_Late,Total_Missing ) 
+# lista de prueba debajo
+#list_=[[1,'ejer1',True,'28/2/2018',True],[2,'ejer2',False,'28/2/2018',False],[3,'ejer3',True,'28/2/2018',False]]
+print(summary(list_))    #con esto mostramos en pantalla la data de summary
 
-        # Escribir codigo aqui:
-            # Total de ejercicios:
-        t_exercises =
 
-            # Total de completados:
-        t_completed =
-
-            # Total de tardes:
-        t_late =
-
-            # Total de sin hacer:
-        t_missing =
-
-        # student_id esta declarada arriba
-        print (" StudentId: %s \n TotalExcercises: %i \n TotalCompleted: %i \n TotalLate: %i \n TotalMissing: %i" % (student_id, t_exercices, t_completed, t_late, t_missing))
-        # Genera el siguiente reporte en consola:
-        # StudentId: Matricula actualmente loggeada.
-        # TotalExcercises: (int)
-        # TotalCompleted: (int)
-        # TotalLate: (int)
-        # TotalMissing: (int)
-
-        # Nota para Federico: Ponle el nombre que quieras a las variables. O trabaja con ellas asi. Your choice.
-    else:
-        print("Tienes que loguearte primero.")
 
 # Esto es lo que vuelve nuestro codigo
 # una aplicacion:
