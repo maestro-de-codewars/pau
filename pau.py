@@ -1,4 +1,4 @@
-﻿# Cada uno tiene sus partes pero,
+# Cada uno tiene sus partes pero,
 # si crees que puedes ayudar a uno de tus compañeros
 # no dudes en hacerlo.
 
@@ -9,97 +9,113 @@ logueado = True
 
 # Por ahora sera "12345678"
 # para poder probar el codigo:
-student_id = "12345678"
+student_id = ""
 
 # Esta es la parte de Snow:
-def login(matricula):
-    logueado = True
-    student_id = matricula
+def login():
+    def validacion(s):
+        student_id = len(s)
+            if len(s) == 8:
+                print(student_id.isnumeric())
+            else:
+                 return False
+        print("This student_id is valid")
+    entrada1 = input()
+    logueado = validacion(entrada1)
+
 
 # Esta es la parte de Bidó
 def codewars(code_wars = "codewars.csv", ejercicios = "ejercicios.csv", procesado = "processed.csv"):
-    if logueado:
-	path1=ejercicios
-	archivo_ejercicios=[]
+
+    print("Ingrese ")
+    entrada2 = input()
+    print("Ingrese ")
+    entrada3 = input()
+    print("Ingrese ")
+    entrada4 = input()
+
+    # Aqui va codigo de Numero 1
+	path1 = ejercicios
+	archivo_ejercicios = []
 	with open (path1,"r") as file:
-    		for item in file.readlines():
-        		archivo_ejercicios.append(item.replace("https://www.codewars.com/kata/","").split(",")) 
+		for item in file.readlines():
+    		archivo_ejercicios.append(item.replace("https://www.codewars.com/kata/","").split(","))
 
-	path2=code_wars
-	archivo_codewars=[]
+	path2 = code_wars
+	archivo_codewars = []
 	with open (path2,"r") as archivo:
-    		for line in archivo.readlines():
-        		archivo_codewars.append(line.split(","))
-       
-	
-        # Este es el algoritmo:
-        # 1- Crear un diccionario para guardar la informacion de los ejercicios hechos en Codewars.
-            # 'hechos' es un diccionario para poder confirmar el nombre facilmente.
-        hechos = {}
+		for line in archivo.readlines():
+    		archivo_codewars.append(line.split(","))
 
-        # 2- Crear una lista donde se guardaran las listas que se retornaran y escribiran en el archivo CSV.
-            # ejemplo: [[lista1],[lista2]]
-        ejercicios = []
 
-        # 3- Llenar el diccionario con la informacion sacada del archivo de Codewars.
-            # el diccionario es: {"nombre_del_ejercicio": "fecha_completado"} (ambos son 'strings')
-        for item in archivo_codewars:
-            hechos.[item[2]] = item[4]
 
-        # Hay que importar datetime para trabajar con las fechas en el paso 4.
-        from datetime import datetime
+    # Este es el algoritmo:
+    # 1- Crear un diccionario para guardar la informacion de los ejercicios hechos en Codewars.
+        # 'hechos' es un diccionario para poder confirmar el nombre facilmente.
+    hechos = {}
 
-        # 4- Este paso tiene varios sub-pasos. Comienza trabajando con la informacion del archivo de ejercicios.
-            # Tenemos que llenar 'ejercicios' con la informacion que se escribira al CSV procesado.
+    # 2- Crear una lista donde se guardaran las listas que se retornaran y escribiran en el archivo CSV.
+        # ejemplo: [[lista1],[lista2]]
+    lista_ejercicios = []
+        # lista_ejercicios = [["Batch", "Exercise", "Completed", "Date Completed", "Completed Late"]]
 
-        for item in archivo_ejercicios:
+    # 3- Llenar el diccionario con la informacion sacada del archivo de Codewars.
+        # el diccionario es: {"slug": "fecha_completado"} (ambos son 'strings')
+    del archivo_codewars[0]
+    for item1 in archivo_codewars:
+        hechos.[item1[2]] = item1[4]
 
-            # Comprueba si el ejercicio fue realizado.
-            if item[3] in hechos.keys():
+    # Hay que importar datetime para trabajar con las fechas en el paso 4.
+    from datetime import datetime
 
-                # Hay que convertir los strings a fechas.
-                date_completed = datetime.strptime(hechos[item[3]], "%Y-%m-%dT%H:%M:%SZ")
-                due_date = datetime.strptime(item[1], "%Y,%m,%d")
+    # 4- Este paso tiene varios sub-pasos. Comienza trabajando con la informacion del archivo de ejercicios.
+        # Tenemos que llenar 'ejercicios' con la informacion que se escribira al CSV procesado.
+    del archivo_ejercicios[0]
+    for item2 in archivo_ejercicios:
+        # Comprueba si el ejercicio fue realizado.
+        if item2[3] in hechos.keys():
+            # Hay que convertir los strings a fechas.
+            date_completed = datetime.strptime(hechos[item2[3]], "%Y-%m-%dT%H:%M:%SZ")
+            due_date = datetime.strptime(item2[1], "%Y,%m,%d")
 
-                check = date_completed > due_date
-                # Aqui revisamos si la fecha en la que se completo fue despues de la de entrega.
-                    # (devuelve un booleano)
+            check = date_completed > due_date
+            # Aqui revisamos si la fecha en la que se completo fue despues de la de entrega.
+                # (devuelve un booleano)
 
-                ejercicios.append([item[0], item[3], True, hechos[item[3]], check])
+            lista_ejercicios.append([item2[0], item2[3], True, hechos[item2[3]], check])
                 # Aqui le agregamos una lista a la lista 'ejercicios'. Con el formato adecuado (See below).
 
-            else:
-                ejercicios.append([item[0], item[3], False, None, False])
-                # Aqui le agregamos una lista a la lista 'ejercicios'. Con el formato adecuado (See below).
+        else:
+            lista_ejercicios.append([item2[0], item2[3], False, None, False])
+            # Aqui le agregamos una lista a la lista 'ejercicios'. Con el formato adecuado (See below).
 
-        # Este es el formato de las listas en 'ejercicios':
-            # Batch (string), Exercise (string),  Completed (bool), DateCompleted(String or None), CompletedLate (bool)
+    # Este es el formato de las listas en 'ejercicios':
+        # Batch (string), Exercise (string),  Completed (bool), DateCompleted(String or None), CompletedLate (bool)
 
-        # Aqui continua el codigo que falta. (Retornar la informacion a la consola.)
+    # Aqui va el codigo para escribir 'ejercicios' al CSV.
 
-    else:
-        print("Tienes que loguearte primero.")
+    # Aqui continua el codigo que falta. (Retornar la informacion a la consola.)
+    for item3 in lista_ejercicios:
+        print("%s, %s, %s, %s, %s" % (item3[0], item3[1], item3[2], item3[3], item3[4]))
 
 # Esta es la parte de Federico:
 def summary(list_):
-    #nota: la lista debe estar en el formato pedido por el profe que es: 
+    #nota: la lista debe estar en el formato pedido por el profe que es:
 # list= [Batch (string), Exercise (string),  Completed (bool), DateCompleted(String or None), CompletedLate (bool)]
-#cualquier duda ver la lista de prueba adjuntada abajo 
+#cualquier duda ver la lista de prueba adjuntada abajo
     Total_Completed = 0   # se declara la variable
     Total_Late = 0      #se declara la variable
     Total_Excercises = len(list_)    # esta variable sera igual a la cantidad de listas que tenga la lista ya que por cada lista habra un ejercicio
-    for exercise in list_:           #vamos a recorrer cada lista para sacar la data 
+    for exercise in list_:           #vamos a recorrer cada lista para sacar la data
         if exercise[2] == True:     #verificamos si el ejercicio fue hecho
             Total_Completed +=1
             if exercise[4] == True:     #verificamos si se entrego tarde
-                Total_Late +=1     
-    Total_Missing = len(list_) - Total_Completed   # los ejercicio no entregados son igual al total de ejercicios menos los realizados 
-    return 'report: \nStudentId:%i \nTotalExcercises:%i \nTotalCompleted:%i \nTotalLate:%i \nTotalMissing:%i' %(20157443,Total_Excercises,Total_Completed,Total_Late,Total_Missing ) 
-# lista de prueba debajo
-#list_=[[1,'ejer1',True,'28/2/2018',True],[2,'ejer2',False,'28/2/2018',False],[3,'ejer3',True,'28/2/2018',False]]
+                Total_Late +=1
+    Total_Missing = len(list_) - Total_Completed   # los ejercicio no entregados son igual al total de ejercicios menos los realizados
+    return 'report: \nStudentId:%i \nTotalExcercises:%i \nTotalCompleted:%i \nTotalLate:%i \nTotalMissing:%i' %(20157443,Total_Excercises,Total_Completed,Total_Late,Total_Missing )
+    # lista de prueba debajo
+    #list_=[[1,'ejer1',True,'28/2/2018',True],[2,'ejer2',False,'28/2/2018',False],[3,'ejer3',True,'28/2/2018',False]]
 print(summary(list_))    #con esto mostramos en pantalla la data de summary
-
-
 
 # Esto es lo que vuelve nuestro codigo
 # una aplicacion:
@@ -108,12 +124,34 @@ while True:
     # Printear las instrucciones. (Hacer)
     print('''
 Bienvenido.
+Comandos:
+    - login
+    - exit
 ''')
 
     # Primero recibimos un comando:
-    comando = input().lower()
+    comando1 = input().lower()
 
     # Luego vemos que dice el comando y corremos el codigo:
     # Escribir todos los comandos. (Hacer)
-    if comando == "exit":
+    if comando1 == "login":
+        login()
+        while logueado:
+            print("Instrucciones")
+            comando2 = input()
+            if comando2 == "codewars":
+                codewars()
+            elif comando2 == "summary":
+                summary()
+            elif comando2 == "exit":
+                print("Adios.")
+                exit()
+            else:
+                print("Comando no valido.")
+
+    elif comando1 == "exit":
+        print("Adios.")
         exit()
+
+    else:
+        print("Comando no valido.")
