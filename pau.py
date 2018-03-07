@@ -176,7 +176,7 @@ Comandos:
     - summary
     - exit
 ''')
-            comando2 = input()
+            comando2 = input().lower()
             if comando2 == "codewars":
                 codewars()
             elif comando2 == "summary":
