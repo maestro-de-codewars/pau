@@ -11,21 +11,20 @@ import csv
 # para poder probar el codigo:
 
 # Esta es la parte de Snow:
-path3= 'processed.csv'
-student_id =input("Introduzca su matricula")
 logueado = False
-def login(student_id):
-    if len(student_id)==8 and student_id.isnumeric():
-        logueado = True
-    else:
-        print ("Matricula no valida")
+_procesado = False
+procesado = ""
 
-if validacion==True:
-    matricula=str(student_id)
-    with open (path3,"w+") as archivo:
-        archivo.write(matricula)
-else:
-    exit()
+def login():
+        student_id = input("Introduzca su matricula:")
+        if len(student_id) == 8 and student_id.isnumeric():
+            with open ('matricula.txt',"w+") as archivo:
+                archivo.write(student_id)
+            global logueado
+            logueado = True
+        else:
+            print ("Matricula no valida")
+
 # Esta es la parte de Bidó
 def codewars():
 
@@ -33,6 +32,7 @@ def codewars():
     ejercicios = input()
     print("Ingrese el path del archivo de Codewars:")
     code_wars = input()
+    global procesado
     print("Ingrese el nombre con el que quiere salvar el archivo procesado:")
     procesado = input()
 
@@ -53,16 +53,17 @@ def codewars():
             print("Intenta denuevo.")
             return
 
+    global _procesado
+    _procesado = True
+
     # Aqui va codigo de Numero 1
-    path1 = ejercicios
     archivo_ejercicios = []
-    with open (path1,"r") as file:
+    with open (ejercicios,"r") as file:
         for item in file.readlines():
             archivo_ejercicios.append(item.replace("https://www.codewars.com/kata/","").strip().split(","))
 
-    path2 = code_wars
     archivo_codewars = []
-    with open (path2,"r") as archivo:
+    with open (code_wars,"r") as archivo:
         for line in archivo.readlines():
             archivo_codewars.append(line.strip().split(","))
 
@@ -93,7 +94,7 @@ def codewars():
         if item2[3] in hechos.keys():
             # Hay que convertir los strings a fechas.
             date_completed = datetime.strptime(hechos[item2[3]], "%Y-%m-%dT%H:%M:%SZ")
-            due_date = datetime.strptime(item2[1], "%Y,%m,%d")
+            due_date = datetime.strptime(item2[1], "%Y/%m/%d")
 
             check = date_completed > due_date
             # Aqui revisamos si la fecha en la que se completo fue despues de la de entrega.
@@ -110,6 +111,9 @@ def codewars():
         # Batch (string), Exercise (string),  Completed (bool), DateCompleted(String or None), CompletedLate (bool)
 
     # Aqui va el codigo para escribir 'ejercicios' al CSV.
+    with open(procesado, "w+") as archivo:
+        for item3 in lista_ejercicios:
+            archivo.write("%s,%s,%s,%s,%s\n" % (item3[0], item3[1], item3[2], item3[3], item3[4]))
 
     # Aqui continua el codigo que falta. (Retornar la informacion a la consola.)
     for item3 in lista_ejercicios:
@@ -118,25 +122,33 @@ def codewars():
 # Esta es la parte de Federico:
 def summary():
 
-    # Aqui va el codigo para leer el archivo procesado.
-    # retorna una lista de listas en la variable "archivo_procesado"
+    if _procesado:
+        # Aqui va el codigo para leer el archivo procesado.
+        # retorna una lista de listas en la variable "archivo_procesado".
+        with open(procesado, 'r') as f:    #esto abre el archivo y lo convierte en una lista para trabajar el summary
+            reader = csv.reader(f)
+            archivo_procesado = list(reader)
+        with open('matricula.txt', 'r') as file:   # esto abre el archivo con la matricula
+            student_id = file.read()
 
     #nota: la lista debe estar en el formato pedido por el profe que es:
 # list= [Batch (string), Exercise (string),  Completed (bool), DateCompleted(String or None), CompletedLate (bool)]
 #cualquier duda ver la lista de prueba adjuntada abajo
-    Total_Completed = 0   # se declara la variable
-    Total_Late = 0      #se declara la variable
-    Total_Excercises = len(archivo_procesado)    # esta variable sera igual a la cantidad de listas que tenga la lista ya que por cada lista habra un ejercicio
-    for exercise in archivo_procesado:           #vamos a recorrer cada lista para sacar la data
-        if exercise[2] == True:     #verificamos si el ejercicio fue hecho
-            Total_Completed +=1
-            if exercise[4] == True:     #verificamos si se entrego tarde
-                Total_Late +=1
-    Total_Missing = len(archivo_procesado) - Total_Completed   # los ejercicio no entregados son igual al total de ejercicios menos los realizados
-    print ('report: \nStudentId:%i \nTotalExcercises:%i \nTotalCompleted:%i \nTotalLate:%i \nTotalMissing:%i' %(student_id,Total_Excercises,Total_Completed,Total_Late,Total_Missing))
-    # lista de prueba debajo
-    #list_=[[1,'ejer1',True,'28/2/2018',True],[2,'ejer2',False,'28/2/2018',False],[3,'ejer3',True,'28/2/2018',False]]
-#print(summary(list_))    #con esto mostramos en pantalla la data de summary
+        Total_Completed = 0   # se declara la variable
+        Total_Late = 0      #se declara la variable
+        Total_Excercises = len(archivo_procesado)    # esta variable sera igual a la cantidad de listas que tenga la lista ya que por cada lista habra un ejercicio
+        for exercise in archivo_procesado:           #vamos a recorrer cada lista para sacar la data
+            if exercise[2] == "True":     #verificamos si el ejercicio fue hecho
+                Total_Completed += 1
+                if exercise[4] == "True":     #verificamos si se entrego tarde
+                    Total_Late += 1
+        Total_Missing = len(archivo_procesado) - Total_Completed   # los ejercicio no entregados son igual al total de ejercicios menos los realizados
+        print ('report: \nStudentId:%s \nTotalExcercises:%i \nTotalCompleted:%i \nTotalLate:%i \nTotalMissing:%i' %(student_id,Total_Excercises,Total_Completed,Total_Late,Total_Missing))
+        # lista de prueba debajo
+        #list_=[[1,'ejer1',True,'28/2/2018',True],[2,'ejer2',False,'28/2/2018',False],[3,'ejer3',True,'28/2/2018',False]]
+    #print(summary(list_))    #con esto mostramos en pantalla la data de summary
+    else:
+        print("Debes correr el comando \"codewars\" por lo menos una vez antes.")
 
 # Esto es lo que vuelve nuestro codigo
 # una aplicacion:
@@ -145,7 +157,7 @@ while True:
     # Printear las instrucciones. (Hacer)
     print('''
 Bienvenido.
-Comandos:
+Introduzca uno de los siguietes comandos:
     - login
     - exit
 ''')
