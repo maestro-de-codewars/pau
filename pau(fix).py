@@ -1,3 +1,4 @@
+import csv
 # Cada uno tiene sus partes pero,
 # si crees que puedes ayudar a uno de tus compañeros
 # no dudes en hacerlo.
@@ -5,25 +6,26 @@
 # Al final sera "False" pero
 # por ahora sera "True"
 # para poder probar el codigo:
-logueado = True
 
 # Por ahora sera "12345678"
 # para poder probar el codigo:
-student_id = ""
 
 # Esta es la parte de Snow:
-def login():
-    def validacion(s):
-        student_id = len(s)
-        if len(s) == 8:
-               print(student_id.isnumeric())
-        else:
-            return False
-        print("This student_id is valid")
-    entrada1 = input()
-    logueado = validacion(entrada1)
+path3= 'processed.csv'
+student_id =input("Introduzca su matricula")
+logueado = False
+def login(student_id):
+    if len(student_id)==8 and student_id.isnumeric():
+        logueado = True
+    else:
+        print ("Matricula no valida")    
 
-
+if validacion==True:
+    matricula=str(student_id)
+    with open (path3,"w+") as archivo: 
+        archivo.write(matricula)
+else:
+    exit()
 # Esta es la parte de Bidó
 def codewars(code_wars = "codewars.csv", ejercicios = "ejercicios.csv", procesado = "processed.csv"):
 
@@ -93,6 +95,16 @@ def codewars(code_wars = "codewars.csv", ejercicios = "ejercicios.csv", procesad
         # Batch (string), Exercise (string),  Completed (bool), DateCompleted(String or None), CompletedLate (bool)
 
     # Aqui va el codigo para escribir 'ejercicios' al CSV.
+    
+    with open (path3,"a+",newline="") as archivo: 
+        wr = csv.writer(archivo)
+        wr.writerows(lista_ejercicios)
+
+    lista_sumary=[]
+    with open (path3,"r") as archivo:
+        for line in archivo.readlines():
+            lista_sumary.append(line.split(","))
+
 
     # Aqui continua el codigo que falta. (Retornar la informacion a la consola.)
     for item3 in lista_ejercicios:
