@@ -15,10 +15,10 @@ student_id = ""
 def login():
     def validacion(s):
         student_id = len(s)
-            if len(s) == 8:
-                print(student_id.isnumeric())
-            else:
-                 return False
+        if len(s) == 8:
+               print(student_id.isnumeric())
+        else:
+            return False
         print("This student_id is valid")
     entrada1 = input()
     logueado = validacion(entrada1)
@@ -35,17 +35,17 @@ def codewars(code_wars = "codewars.csv", ejercicios = "ejercicios.csv", procesad
     entrada4 = input()
 
     # Aqui va codigo de Numero 1
-	path1 = ejercicios
-	archivo_ejercicios = []
-	with open (path1,"r") as file:
-		for item in file.readlines():
-    		archivo_ejercicios.append(item.replace("https://www.codewars.com/kata/","").split(","))
+    path1 = ejercicios
+    archivo_ejercicios = []
+    with open (path1,"r") as file:
+        for item in file.readlines():
+            archivo_ejercicios.append(item.replace("https://www.codewars.com/kata/","").split(","))
 
-	path2 = code_wars
-	archivo_codewars = []
-	with open (path2,"r") as archivo:
-		for line in archivo.readlines():
-    		archivo_codewars.append(line.split(","))
+    path2 = code_wars
+    archivo_codewars = []
+    with open (path2,"r") as archivo:
+        for line in archivo.readlines():
+            archivo_codewars.append(line.split(","))
 
 
 
@@ -63,7 +63,7 @@ def codewars(code_wars = "codewars.csv", ejercicios = "ejercicios.csv", procesad
         # el diccionario es: {"slug": "fecha_completado"} (ambos son 'strings')
     del archivo_codewars[0]
     for item1 in archivo_codewars:
-        hechos.[item1[2]] = item1[4]
+        hechos[item1[2]] = item1[4]
 
     # Hay que importar datetime para trabajar con las fechas en el paso 4.
     from datetime import datetime
@@ -115,7 +115,7 @@ def summary(list_):
     return 'report: \nStudentId:%i \nTotalExcercises:%i \nTotalCompleted:%i \nTotalLate:%i \nTotalMissing:%i' %(20157443,Total_Excercises,Total_Completed,Total_Late,Total_Missing )
     # lista de prueba debajo
     #list_=[[1,'ejer1',True,'28/2/2018',True],[2,'ejer2',False,'28/2/2018',False],[3,'ejer3',True,'28/2/2018',False]]
-print(summary(list_))    #con esto mostramos en pantalla la data de summary
+#print(summary(list_))    #con esto mostramos en pantalla la data de summary
 
 # Esto es lo que vuelve nuestro codigo
 # una aplicacion:
